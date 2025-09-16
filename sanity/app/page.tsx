@@ -1,7 +1,6 @@
-import TopIcons from "../components/home/TopIcons";
-import HeroCentered from "../components/home/HeroCentered";
-import SliderRail from "../components/home/SliderRail";
-import EventsTeaser from "../components/home/EventsTeaser";
+import HeroCentered from "@/components/home/HeroCentered";
+import SliderRail from "@/components/home/SliderRail";
+import EventsTeaser from "@/components/home/EventsTeaser";
 
 export const metadata = {
   title: "WeDesi @ UIC — South Asian Student Community",
@@ -11,7 +10,6 @@ export const metadata = {
 export default function HomePage() {
   return (
     <div className="bg-black">
-      <TopIcons />
       <HeroCentered />
       <SliderRail />
       <EventsTeaser />
