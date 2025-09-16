@@ -1,16 +1,24 @@
+import Link from "next/link";
 import { socialLinks } from "@/lib/links";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-neutral-200">
-      <div className="mx-auto max-w-6xl px-4 py-10 text-sm text-neutral-600">
-        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} WeDesi @ UIC</p>
-          <div className="flex gap-4">
-            <a href={socialLinks.instagram} target="_blank" className="hover:underline">@wedesi.uic</a>
-            <a href={socialLinks.linktree} target="_blank" className="hover:underline">Linktree</a>
-          </div>
-        </div>
+    <footer className="border-t border-white/10 bg-black/80">
+      <div className="mx-auto max-w-6xl px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/70">
+        <p>© {new Date().getFullYear()} WeDesi @ UIC</p>
+        <nav className="flex flex-wrap items-center gap-4">
+          {socialLinks.map((s) => (
+            <Link
+              key={s.label}
+              href={s.href}
+              target={s.external ? "_blank" : undefined}
+              rel={s.external ? "noopener noreferrer" : undefined}
+              className="hover:text-white"
+            >
+              {s.label}
+            </Link>
+          ))}
+        </nav>
       </div>
     </footer>
   );
