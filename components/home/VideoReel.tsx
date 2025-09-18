@@ -1,22 +1,25 @@
 "use client";
+
 import { useReducedMotion } from "framer-motion";
 
 export default function VideoReel() {
   const reduce = useReducedMotion();
+  const prefersReduce: boolean = (reduce ?? false) as boolean;
+
   return (
-    <section className="bg-black">
-      <div className="relative mx-auto max-w-[1400px] px-0 md:px-4 py-10 md:py-14">
-        <div className="relative overflow-hidden rounded-2xl border border-white/10">
+    <section className="relative bg-black">
+      <div className="mx-auto max-w-6xl px-4 py-16">
+        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl ring-1 ring-white/10">
           <video
-            src="/videos/reel.mp4"
-            className="h-[44vh] md:h-[60vh] w-full object-cover"
-            autoPlay={!reduce}
+            className="h-full w-full object-cover"
+            src="/hero.mp4"               /* put your reel here */
+            autoPlay={!prefersReduce}     /* no autoplay if user prefers reduced motion */
             muted
             loop
             playsInline
-            controls={reduce}
+            controls={prefersReduce}      /* show controls only when reduced motion */
+            poster="/images/hero-poster.jpg" /* optional poster image */
           />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/70 to-transparent" />
         </div>
       </div>
     </section>
