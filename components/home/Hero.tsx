@@ -1,41 +1,51 @@
+"use client";
+
 import Link from "next/link";
-import Parallax from "@/components/motion/Parallax";
-import Reveal from "@/components/motion/Reveal";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { fadeUp, Stagger } from "@/components/motion/FX";
+import { pages } from "@/lib/links";
 
 export default function Hero() {
   return (
-    <section className="relative isolate min-h-[90vh] md:min-h-screen overflow-hidden bg-black">
-      {/* subtle radial glow */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden>
-        <div className="absolute -top-24 left-1/2 h-[60rem] w-[60rem] -translate-x-1/2 rounded-full bg-maroon/20 blur-[120px]" />
+    <section className="relative isolate min-h-[92vh] overflow-hidden bg-black">
+      {/* Soft vignette */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/2 top-[-24rem] h-[78rem] w-[78rem] -translate-x-1/2 rounded-full bg-maroon/22 blur-[160px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_32%,rgba(122,31,43,0.10),transparent_62%)]" />
       </div>
 
-      <Parallax>
-        <div className="mx-auto flex min-h-[90vh] md:min-h-screen max-w-6xl flex-col justify-center px-4">
-          <Reveal>
-            <h1 className="text-5xl md:text-7xl font-semibold tracking-tight text-white">
-              South Asian community at UIC — <span className="text-maroon">show up</span>, belong, create.
-            </h1>
-          </Reveal>
+      <div className="relative mx-auto flex max-w-6xl flex-col items-center px-4 pt-20 md:pt-28">
+        <motion.div {...fadeUp(0)} className="mb-6 inline-flex items-center gap-3 opacity-90">
+          <Image src="/logo.jpeg" alt="WeDesi" width={36} height={36} className="rounded-md" />
+          <span className="text-sm text-white/75">WeDesi @ UIC</span>
+        </motion.div>
 
-          <Reveal delay={0.08}>
-            <p className="mt-5 max-w-2xl text-lg md:text-xl text-neutral-300">
-              WeDesi is a student-run home for culture, friendship, and impact. Join us for festivals, meetups, and collabs.
-            </p>
-          </Reveal>
+        <motion.h1
+          {...fadeUp(0.06)}
+          className="text-center text-[40px] leading-[1.05] font-semibold tracking-tight text-white md:text-[72px]"
+        >
+          South Asian community at UIC — <span className="text-maroon">show up</span>, belong, create.
+        </motion.h1>
 
-          <Reveal delay={0.16}>
-            <div className="mt-8 flex w-full flex-wrap gap-3">
-              <Link href="/join" className="rounded-2xl bg-white px-6 py-3 text-black hover:opacity-90 transition">
-                Join WeDesi
-              </Link>
-              <Link href="/photos" className="rounded-2xl border border-white/30 px-6 py-3 text-white hover:border-white transition">
-                See Photos
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-      </Parallax>
+        <motion.p
+          {...fadeUp(0.14)}
+          className="mx-auto mt-5 max-w-3xl text-center text-lg md:text-xl text-white/80"
+        >
+          Culture, friends, and impact — on campus and beyond.
+        </motion.p>
+
+        <Stagger delay={0.24}>
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href={pages.join}
+              className="rounded-full bg-white px-7 py-3 text-black transition hover:opacity-90"
+            >
+              Join WeDesi
+            </Link>
+          </div>
+        </Stagger>
+      </div>
     </section>
   );
 }

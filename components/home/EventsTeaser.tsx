@@ -1,5 +1,5 @@
-import { getUpcomingEvents } from "../../lib/cms";
-import { EventList } from "../event-list";
+import { getUpcomingEvents } from "@/lib/cms";
+import { EventList } from "@/components/event-list";
 export default async function EventsTeaser() {
   const events = await getUpcomingEvents(6);
   return (
