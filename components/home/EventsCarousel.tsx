@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { pages } from "@/lib/links";
+import { pages } from "../../lib/links";
 
 async function getEvents() {
   try {

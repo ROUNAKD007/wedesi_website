@@ -1,13 +1,9 @@
-import type { Metadata } from "next";
 import "./globals.css";
-import { SiteHeader } from "@/components/site-header";
+import type { Metadata } from "next";
 import Spotlight from "@/components/announce/Spotlight";
+import SiteHeader from "@/components/site-header";
 
-export const metadata: Metadata = {
-  title: "WeDesi @ UIC — South Asian Student Community",
-  description: "Events, culture, and connection for South Asian students at UIC.",
-  icons: { icon: "/logo.jpeg", apple: "/logo.jpeg" },
-};
+export const metadata: Metadata = { title: "WeDesi @ UIC" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
