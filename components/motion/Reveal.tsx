@@ -1,16 +1,16 @@
 "use client";
-import { motion, useReducedMotion } from "framer-motion";
-export default function Reveal({
-  children, delay = 0, y = 18,
-}: { children: React.ReactNode; delay?: number; y?: number }) {
-  const reduce = useReducedMotion();
-  if (reduce) return <div>{children}</div>;
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+
+export default function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
   return (
     <motion.div
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -120px 0px" }}
-      transition={{ duration: 0.6, ease: "easeOut", delay }}
+      ref={ref}
+      initial={{ y: 24, opacity: 0 }}
+      animate={inView ? { y: 0, opacity: 1 } : {}}
+      transition={{ duration: 0.6, delay }}
     >
       {children}
     </motion.div>

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Camera, Users, CalendarDays, HandHeart } from "lucide-react";
-import { Stagger } from "@/components/motion/FX";
+import Tilt from "@/components/ux/Tilt";
 import { pages } from "@/lib/links";
 
 const items = [
@@ -13,17 +13,16 @@ const items = [
 
 export default function ServicesRow() {
   return (
-    <div className="bg-black">
+    <div className="bg-transparent">
       <div className="mx-auto max-w-6xl px-4">
         <div
           className="mx-auto -mt-14 grid w-full max-w-3xl grid-cols-2 gap-6 rounded-2xl
                      border border-white/10 bg-white/5 p-5 backdrop-blur
                      sm:grid-cols-4 sm:gap-4 sm:rounded-full sm:px-6 sm:py-4"
         >
-          <Stagger delay={0.06}>
-            {items.map(({ href, Icon, title, sub }) => (
+          {items.map(({ href, Icon, title, sub }) => (
+            <Tilt key={href}>
               <Link
-                key={href}
                 href={href}
                 className="group flex flex-col items-center justify-center gap-1 rounded-xl p-3
                            text-white/90 transition hover:bg-white/5"
@@ -37,8 +36,8 @@ export default function ServicesRow() {
                 <div className="text-sm font-medium">{title}</div>
                 <div className="text-[11px] text-white/60">{sub}</div>
               </Link>
-            ))}
-          </Stagger>
+            </Tilt>
+          ))}
         </div>
       </div>
     </div>
