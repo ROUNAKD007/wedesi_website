@@ -1,30 +1,27 @@
 import Hero from "@/components/home/Hero";
 import ServicesRow from "@/components/home/ServicesRow";
-import VideoReel from "@/components/home/VideoReel";
 import EventsCarousel from "@/components/home/EventsCarousel";
-import ImpactStats from "@/components/home/ImpactStats";
 import PhotoGrid from "@/components/home/PhotoGrid";
-import MembershipCallout from "@/components/home/MembershipCallout";
 import SupportSection from "@/components/home/SupportSection";
-import SiteFooter from "@/components/site-footer";
-
-export const metadata = {
-  title: "WeDesi @ UIC — South Asian Student Community",
-  description: "Events, culture, and connection for South Asian students at UIC.",
-};
+import ParallaxBand from "@/components/visuals/ParallaxBand";
+import Reveal from "@/components/motion/Reveal";
+import TopMarquee from "@/components/visuals/TopMarquee";
 
 export default function HomePage() {
   return (
-    <div className="bg-black">
+    <>
+      <TopMarquee />
       <Hero />
       <ServicesRow />
-      <section id="culture"><VideoReel /></section>
-      <section id="community"><EventsCarousel /></section>
-      <section id="career"><ImpactStats /></section>
-      <section id="impact"><PhotoGrid /></section>
-      <MembershipCallout />
-      <SupportSection />
-      <SiteFooter />
-    </div>
+      <ParallaxBand />
+      <section className="bg-transparent">
+        <div className="mx-auto max-w-6xl px-4 py-12 md:py-16">
+          <Reveal><h2 className="text-2xl md:text-3xl font-semibold text-white">Moments</h2></Reveal>
+          <Reveal delay={0.08}><PhotoGrid /></Reveal>
+        </div>
+      </section>
+      <Reveal><EventsCarousel /></Reveal>
+      <Reveal delay={0.06}><SupportSection /></Reveal>
+    </>
   );
 }
