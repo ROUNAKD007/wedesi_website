@@ -1,15 +1,23 @@
 "use client";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, type Transition } from "framer-motion";
+
+const EASE: Transition["ease"] = [0.16, 1, 0.3, 1]; // smooth, Apple-like
 
 export const fadeUp = (delay = 0, y = 16) => ({
   initial: { opacity: 0, y },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "0px 0px -120px 0px" },
-  transition: { duration: 0.6, ease: "easeOut", delay },
+  transition: { duration: 0.6, ease: EASE, delay } as Transition,
 });
 
-export function Stagger({ children, delay = 0, gap = 0.06 }:{
-  children: React.ReactNode[] | React.ReactNode, delay?: number, gap?: number
+export function Stagger({
+  children,
+  delay = 0,
+  gap = 0.06,
+}: {
+  children: React.ReactNode[] | React.ReactNode;
+  delay?: number;
+  gap?: number;
 }) {
   const reduce = useReducedMotion();
   if (reduce) return <>{children}</>;
@@ -17,7 +25,9 @@ export function Stagger({ children, delay = 0, gap = 0.06 }:{
   return (
     <>
       {arr.map((c, i) => (
-        <motion.div key={i} {...fadeUp(delay + i * gap)}>{c}</motion.div>
+        <motion.div key={i} {...fadeUp(delay + i * gap)}>
+          {c}
+        </motion.div>
       ))}
     </>
   );
