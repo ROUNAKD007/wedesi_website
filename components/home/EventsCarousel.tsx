@@ -1,6 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
-import { pages } from "../../lib/links";
+import { pages } from "@/lib/links";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+export const dynamic = "force-dynamic";
 
 async function getEvents() {
   try {
@@ -28,8 +30,9 @@ export default async function EventsCarousel() {
         ) : (
           <div className="mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {events.map((e: any) => (
-              <Link key={e.slug || e.title} href={pages.events}
-                className="snap-start min-w-[80%] sm:min-w-[50%] lg:min-w-[33%] rounded-2xl border border-white/10 bg-white/5 p-5 text-white transition hover:border-white/20 hover:translate-y-[-2px]">
+              <Link key={e.slug || e.title}
+                    href={pages.events}
+                    className="snap-start min-w-[80%] sm:min-w-[50%] lg:min-w-[33%] rounded-2xl border border-white/10 bg-white/5 p-5 text-white transition hover:border-white/20 hover:translate-y-[-2px]">
                 <div className="text-sm text-white/60">{new Date(e.start || e.date || Date.now()).toLocaleString()}</div>
                 <h3 className="mt-1 text-lg font-semibold">{e.title || "Event"}</h3>
                 {e.location && <p className="text-white/70">{e.location}</p>}

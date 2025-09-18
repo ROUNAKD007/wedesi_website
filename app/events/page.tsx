@@ -1,14 +1,19 @@
-import { getUpcomingEvents } from '@/lib/cms'
-import { EventList } from '@/components/event-list'
+import EventList from "@/components/event-list";
+import { getUpcomingEvents } from "@/lib/cms";
 
-export const metadata = { title: 'Events — WeDesi @ UIC' }
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function EventsPage() {
-  const events = await getUpcomingEvents(20)
+  const items = await getUpcomingEvents(24); // [] if CMS not configured
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12">
-      <h1 className="text-3xl font-semibold mb-6">Events</h1>
-      <EventList events={events} />
-    </div>
-  )
+    <main className="bg-black">
+      <div className="mx-auto max-w-6xl px-4 py-12 md:py-16">
+        <h1 className="text-3xl md:text-4xl font-semibold text-white">Events</h1>
+        <div className="mt-6">
+          <EventList items={items} />
+        </div>
+      </div>
+    </main>
+  );
 }

@@ -1,19 +1,42 @@
-import { createClient } from 'next-sanity'
+export type SimpleEvent = {
+  title?: string;
+  start?: string;
+  date?: string;
+  location?: string;
+  href?: string;
+  slug?: string;
+};
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-01-01'
+const PID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+const DATASET = process.env.NEXT_PUBLIC_SANITY_DATASET;
 
-export const sanity = createClient({ projectId, dataset, apiVersion, useCdn: true })
-
-export async function getUpcomingEvents(limit = 6) {
+/** Returns [] if env is missing or any error occurs. */
+export async function getUpcomingEvents(limit = 12): Promise<SimpleEvent[]> {
+  if (!PID || !DATASET) return [];
   try {
-    const now = new Date().toISOString()
-    const query = `*[_type == "event" && start >= $now] | order(start asc)[0...$limit]{
-      _id, title, slug, start, end, location, coverImage{asset->{url}}
-    }`
-    return await sanity.fetch(query, { now, limit })
+    const { createClient } = await import("@sanity/client");
+    const client = createClient({
+      projectId: PID,
+      dataset: DATASET,
+      apiVersion: "2024-01-01",
+      useCdn: true,
+    });
+
+    const query = `*[_type == "event" && dateTime(coalesce(start, date)) >= dateTime(now())]
+                   | order(coalesce(start, date) asc)[0...$limit]{
+                     title, start, date, location, rsvpLink, "slug": slug.current
+                   }`;
+
+    const rows = await client.fetch(query, { limit });
+    return (rows || []).map((r: any) => ({
+      title: r?.title,
+      start: r?.start,
+      date: r?.date,
+      location: r?.location,
+      href: r?.rsvpLink,
+      slug: r?.slug,
+    }));
   } catch {
-    return []
+    return [];
   }
 }
